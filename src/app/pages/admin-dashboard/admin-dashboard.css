@@ -1,0 +1,106 @@
+/* --- ESTILOS PARA AS ABAS --- */
+.tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que as abas quebrem a linha em telas menores */
+    gap: 0.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    /* Cor de borda mais suave */
+    margin-bottom: 1.5rem;
+}
+
+.tab-nav button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* Espaço entre o ícone e o texto */
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    /* Alinha o botão com a borda inferior do container */
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6b7280;
+    /* Cor de texto mais suave para abas inativas */
+    transition: all 0.2s ease-in-out;
+}
+
+.tab-nav button:hover {
+    background-color: #f9fafb;
+    /* Fundo suave ao passar o mouse */
+    color: #1f2937;
+    /* Cor de texto mais escura ao passar o mouse */
+}
+
+.tab-nav button.active {
+    /* Use a sua variável de cor primária, com um fallback */
+    border-bottom-color: var(--cor-primaria, #4f46e5);
+    color: var(--cor-primaria, #4f46e5);
+    font-weight: 600;
+}
+
+.tab-content {
+    margin-top: 1rem;
+}
+
+/* --- ESTILOS ORIGINAIS (mantidos) --- */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.dashboard-grid .section-full-width {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+}
+
+.modal-info {
+    background-color: #f3f4f6;
+    border-left: 4px solid var(--cor-primaria, #4f46e5);
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
