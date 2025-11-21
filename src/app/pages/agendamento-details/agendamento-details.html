@@ -1,0 +1,82 @@
+<div class="details-page-container">
+  <div *ngIf="isLoading" class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  <div *ngIf="errorMessage && !isLoading" class="error-message">{{ errorMessage }}</div>
+
+  <ng-container *ngIf="agendamento && !isLoading">
+    <div class="details-header">
+      <div>
+        <h1>Agendamento #{{ agendamento.id }}</h1>
+        <p class="subtitle">Destino: {{ agendamento.destino }}</p>
+      </div>
+      <div class="header-actions">
+        <button (click)="voltar()" class="btn-secondary">Voltar</button>
+      </div>
+    </div>
+
+    <div class="details-card">
+      <div class="details-card-section">
+        <h3>Detalhes da Viagem</h3>
+        <div class="info-grid two-cols">
+          <div class="info-item"><label>Motorista:</label>
+            <p>{{ agendamento.motorista.nome }}</p>
+          </div>
+          <div class="info-item"><label>Veículo (Placa):</label>
+            <p>{{ agendamento.veiculo.placa }}</p>
+          </div>
+          <div class="info-item"><label>Status:</label>
+            <p><span class="status-badge" [ngClass]="agendamento.status">{{ agendamento.status | titlecase }}</span></p>
+          </div>
+          <div class="info-item"><label>Saída Agendada:</label>
+            <p>{{ agendamento.dataHoraSaida | date:'dd/MM/yyyy HH:mm' }}</p>
+          </div>
+          <div *ngIf="agendamento.justificativa" class="details-card-section">
+            <h3>Justificativa</h3>
+            <div class="info-item-full-width">
+              <p>{{ agendamento.justificativa }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="agendamento.dataHoraInicioViagem" class="details-card-section">
+        <h3>Execução da Viagem</h3>
+        <div class="info-grid two-cols">
+          <div class="info-item"><label>Início Real da Viagem:</label>
+            <p>{{ agendamento.dataHoraInicioViagem | date:'dd/MM/yyyy HH:mm' }}</p>
+          </div>
+          <div class="info-item"><label>Km de Saída:</label>
+            <p>{{ agendamento.quilometragemSaida | number:'1.0-0':'pt-BR' }} km</p>
+          </div>
+          <div *ngIf="agendamento.dataHoraRetorno" class="info-item"><label>Fim da Viagem:</label>
+            <p>{{ agendamento.dataHoraRetorno | date:'dd/MM/yyyy HH:mm' }}</p>
+          </div>
+          <div *ngIf="agendamento.quilometragemFinal" class="info-item"><label>Km Final:</label>
+            <p>{{ agendamento.quilometragemFinal | number:'1.0-0':'pt-BR' }} km</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="details-card-section" *ngIf="agendamento.historicoStatus && agendamento.historicoStatus.length > 0">
+        <h3>Histórico de Status</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Data/Hora</th>
+              <th>Alterado Por</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let historico of agendamento.historicoStatus">
+              <td>{{ historico.statusNovo | titlecase }}</td>
+              <td>{{ historico.dataHoraAlteracao | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+              <td>{{ historico.usuarioResponsavel }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+</div>
