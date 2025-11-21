@@ -1,0 +1,82 @@
+<div class="dashboard-container">
+    <div class="section-header">
+        <h1>Meus Agendamentos</h1>
+        <button routerLink="/motorista/ocorrencias/nova" class="btn-primary">Relatar Ocorrência</button>
+    </div>
+
+    <section class="data-section">
+        <div *ngIf="isLoading" class="spinner-container">
+            <div class="spinner"></div>
+        </div>
+
+        <table *ngIf="!isLoading && agendamentos.length > 0" class="data-table">
+            <thead>
+                <tr>
+                    <th>Destino</th>
+                    <th>Veículo (Placa)</th>
+                    <th>Data/Hora Saída</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let agendamento of agendamentos">
+                    <td>{{ agendamento.destino }}</td>
+                    <td>{{ agendamento.veiculo.placa }}</td>
+                    <td>{{ agendamento.dataHoraSaida | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <td>{{ agendamento.status }}</td>
+                    <td class="actions-cell">
+                        <button *ngIf="agendamento.status === 'AGENDADO'" (click)="abrirModal(agendamento, 'iniciar')"
+                            class="btn-action btn-success">
+                            Iniciar Viagem
+                        </button>
+                        <button *ngIf="agendamento.status === 'EM_USO'" (click)="abrirModal(agendamento, 'finalizar')"
+                            class="btn-action btn-warning">
+                            Finalizar Viagem
+                        </button>
+                        <button *ngIf="agendamento.status !== 'AGENDADO' && agendamento.status !== 'EM_USO'"
+                            [routerLink]="['/agendamentos/detalhes', agendamento.id]" class="btn-action btn-secondary">
+                            Ver Detalhes
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p *ngIf="!isLoading && agendamentos.length === 0">
+            Você não tem nenhum agendamento.
+        </p>
+    </section>
+</div>
+
+<div *ngIf="modalAberto" class="modal-overlay">
+    <div class="modal-content">
+        <h3>{{ tipoAcao === 'iniciar' ? 'Iniciar Viagem' : 'Finalizar Viagem' }}</h3>
+        <p>Agendamento #{{ agendamentoSelecionado?.id }} para o veículo de placa {{
+            agendamentoSelecionado?.veiculo?.placa }}</p>
+
+        <p class="info-km" *ngIf="tipoAcao === 'iniciar'">
+            Quilometragem atual do veículo: <strong>{{ agendamentoSelecionado?.veiculo?.quilometragemAtual }}
+                km</strong>
+        </p>
+        <p class="info-km" *ngIf="tipoAcao === 'finalizar'">
+            Quilometragem de saída da viagem: <strong>{{ agendamentoSelecionado?.quilometragemSaida }} km</strong>
+        </p>
+
+        <form #acaoForm="ngForm" (ngSubmit)="confirmarAcao()">
+            <div class="form-group">
+                <label for="quilometragem">Quilometragem</label>
+                <input type="text" id="quilometragem" name="quilometragem" [(ngModel)]="dadosAcao.quilometragem"
+                    required mask="separator" thousandSeparator=".">
+            </div>
+            <div class="form-group">
+                <label for="observacoes">Observações (opcional)</label>
+                <textarea id="observacoes" name="observacoes" rows="3" [(ngModel)]="dadosAcao.observacoes"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" (click)="fecharModal()" class="btn-secondary">Cancelar</button>
+                <button type="submit" [disabled]="acaoForm.invalid" class="btn-primary">Confirmar</button>
+            </div>
+        </form>
+    </div>
+</div>
