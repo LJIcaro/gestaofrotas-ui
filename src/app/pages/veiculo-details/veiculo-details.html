@@ -1,0 +1,55 @@
+<div class="details-page-container">
+    <ng-container *ngIf="veiculo; else loadingOrError">
+
+        <div class="details-header">
+            <div>
+                <h1>{{ veiculo.modelo }}</h1>
+                <p class="placa-subtitle">{{ veiculo.placa }}</p>
+            </div>
+            <div class="header-actions">
+                <button (click)="location.back()" class="btn-secondary">Voltar</button>
+            </div>
+        </div>
+
+        <div class="details-card">
+            <div class="details-card-section">
+                <h3>Informações Gerais</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>ID</label>
+                        <p>{{ veiculo.id }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Tipo</label>
+                        <p>{{ veiculo.tipo }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Ano</label>
+                        <p>{{ veiculo.ano }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Quilometragem</label>
+                        <p>{{ veiculo.quilometragemAtual | number:'1.0-0' }} km</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-card-section">
+                <h3>Status Atual</h3>
+                <div class="info-item">
+                    <span class="status-badge" [ngClass]="getStatusClass(veiculo.status)">
+                        {{ veiculo.status.replace('_', ' ') }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+
+    <ng-template #loadingOrError>
+        <div *ngIf="isLoading" class="spinner-container">
+            <div class="spinner"></div>
+        </div>
+        <div *ngIf="errorMessage && !isLoading" class="error-message">{{ errorMessage }}</div>
+    </ng-template>
+</div>
