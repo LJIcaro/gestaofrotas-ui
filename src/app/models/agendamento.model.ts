@@ -23,7 +23,7 @@ export interface Agendamento {
     motorista: MotoristaResumo;
     dataHoraSaida: string; // A data virá como string no formato ISO
     destino: string;
-    status: 'AGENDADO' | 'EM_USO' | 'FINALIZADO' | 'CANCELADO';
+    status: 'AGENDADO' | 'EM_USO' | 'FINALIZADO' ;
     // Adicionamos com '?' para indicar que são opcionais, pois podem ser nulas
     // dependendo do status do agendamento.
     dataHoraInicioViagem?: string;
