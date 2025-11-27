@@ -52,9 +52,13 @@ Este projeto foi desenvolvido como material avalitivo para a disciplina de Progr
 
 ### Comunicação com o Backend
 
-**Importante:** Para que a aplicação frontend funcione corretamente, o **backend (API) deve estar em execução** no endereço `http://localhost:8080`.
+**Importante:** Para que a aplicação frontend funcione corretamente, o **backend (API) deve estar em execução** no endereço 
+`http://localhost:8080`.
+
+### Link da Aplicação em Cloud
+
+https://pitfrotas.online/
 
 ### Repositório do Backend
 
 O código do backend está disponível em: https://github.com/LJIcaro/gestaofrotas-api
-
